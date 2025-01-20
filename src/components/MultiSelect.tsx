@@ -39,8 +39,14 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'a' && (e.ctrlKey || e.metaKey)) {
-      e.preventDefault();
-      setSelectedOptions(options);
+      if (!searchTerm.trim()) {
+        e.preventDefault();
+        setSelectedOptions(options);
+      }
+    }
+    
+    if (e.key === 'Backspace' && !searchTerm && selectedOptions.length > 0) {
+      setSelectedOptions(prev => prev.slice(0, -1));
     }
   };
 
